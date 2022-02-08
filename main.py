@@ -1,75 +1,57 @@
 import random
-def sontop_u(n=10):
-    "Kompyuter son o'ylaydi, biz esa uni topamiz!"
-    s = 0
-    x = random.randint(1, n)
-    print(f"1 dan {n} gacha son o'yladim topa olasizmi?")
+
+def sontop(x=10):
+    tasodifiy_son = random.randint(1,x)
+    print(f"Men 1 dan {x} gacha son o'yladim. Topa olasizmi?", end="")
+    taxminlar = 0
     while True:
-        s += 1
-        y = int(input(">>"))
-        if y < x:
-            print("Kompyuter o'ylagan son {} dan katta, qaytadan urunib ko'ring!".format(y))
-        elif y > x:
-            print("Kompyuter o'ylagan son {} dan kichik, qaytadan urunib ko'ring!".format(y))
+        taxminlar += 1
+        taxmin = int(input(">>>"))
+        if taxmin<tasodifiy_son:
+            print("Xato. Men o'ylagan son bundan kattaroq. Yana harakat qiling:", end="")
+        elif taxmin>tasodifiy_son:
+            print("Xato. Men o'ylagan son bundan kichikroq. Yana harakat qiling:", end="")
         else:
             break
-    print("Kompyuter {} sonini o'ylagan edi. Tabriklaymiz siz {} urunishda topdingiz!".format(x, s))
-    return s
+        
+    print(f"Tabriklayman. {taxminlar} ta taxmin bilan topdingiz!")
+    return taxminlar
+    
 
-
-def sontop_pc(n=10):
-    "Biz son o'ylaymiz kompyuter esa uni topadi"
-    input(f"1 dan {n} gacha bo'lgan son o'ylang va ixtiyoriy tugmani bosing\n>>")
-    s = 0
-    x1 = 1
-    x2 = n
+def sontop_pc(x=10):
+    input(f"1 dan {x} gacha son o'ylang va istalgan tugmani bosing. Men topaman.")
+    quyi = 1
+    yuqori = x
+    taxminlar = 0
     while True:
-        s += 1
-        if x1 != x2:
-            x = random.randint(x1,x2)
+        taxminlar += 1
+        if quyi != yuqori:
+            taxmin = random.randint(quyi,yuqori)
+        else:
+            taxmin = quyi
+        javob = input(f"Siz {taxmin} sonini o'yladingiz: to'g'ri (t),"
+                      f"men o'ylagan son bundan kattaroq (+), yoki kichikroq (-)".lower())
+        if javob == "-":
+            yuqori = taxmin - 1
+        elif javob == "+":
+            quyi = taxmin + 1
         else:
             break
-        flag = input(f"Siz o'ylagan son {x}. To'g'i bo'lsa (t), siz o'ylagan sondan kichik bo'lsa (-),"
-                     f"katta bo'lsa (+) ni kiriting\n>>").lower()
-        # if x == x1:
-        #     break
-        if flag == "-" and x1 != x2:
-            x2 = x-1
-        elif flag == "+" and x1 != x2:
-            x1 = x+1
-        else:
-            break
-    print(f"Siz o'ylagan sonni {s} urunishda topdim!")   
-    return s
+    print(f"Men {taxminlar} ta taxmin bilan topdim!")
+    return taxminlar
 
-def play():
-    while True:
-        print("Keling son topish o'yinini o'ynaymiz!")
-        oraliq = int(input("Nechchigacha bo'lgan oraliqdagi sonlardan o'ynaymiz?\n>>"))
-        urunish_u = sontop_u(oraliq)
-        urunish_pc = sontop_pc(oraliq)
-        if urunish_u < urunish_pc:
-            print("Tabriklaymiz siz yutdingiz!")
-        elif urunish_u > urunish_pc:
-            print("Siz yutqazdingiz!")
+def play(x=10):
+    yana = True
+    while yana:
+        taxminlar_user = sontop(x)
+        taxminlar_pc = sontop_pc(x)
+        
+        if taxminlar_user>taxminlar_pc:
+            print(f"Men {taxminlar_pc} taxmin bilan topdim va  yutdim!")
+        elif taxminlar_user<taxminlar_pc:
+            print(f"Siz {taxminlar_user} taxmin bilan topdingiz va yutdingiz!")
         else:
-            print("Durang")
-        flag = input("Yana o'ynaymizmi(Yes/No):").lower()
-        if flag == 'yes':
-            continue
-        else:
-            break       
+            print("Durrang!")
+        yana = int(input("Yana o'ynaymizmi? Ha(1)/Yo'q(0):"))
+            
 play()
-
-
-
-
-
-
-
-
-
-
-
-
-
